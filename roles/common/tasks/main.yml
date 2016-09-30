@@ -1,0 +1,4 @@
+---
+- name: Install dependences
+  include: dependeces.yml
+  become: true

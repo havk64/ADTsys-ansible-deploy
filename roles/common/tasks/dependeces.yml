@@ -1,0 +1,25 @@
+---
+- name: update apt cache
+  apt: update_cache=yes
+  become: true
+
+- name: install build depends
+  apt: pkg={{ item }} state=present install_recommends=no
+  with_items:
+    - build-essential
+    - git
+    - libcurl4-openssl-dev
+    - libffi-dev
+    - libreadline-dev
+    - libssl-dev
+    - libxml2-dev
+    - libxslt1-dev
+    - zlib1g-dev
+    - nodejs
+    - acl
+  become: true
+# Autoremove unused packages just when needed(conditional at last line).
+- name: Autoremove unused packages
+  command: apt-get -y autoremove
+  register: autoremove_output
+  changed_when: "'The following packages will be REMOVED' in autoremove_output.stdout"
