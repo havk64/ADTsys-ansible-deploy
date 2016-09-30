@@ -1,11 +1,11 @@
 # ADTsys ansible deploy
-Automation Project to deploy ADTsys application test using Ansible on a Vagrant instance
+Automation Project to deploy ADTsys application test using Ansible playbooks on a Vagrant instance
 ## Introduction
 
 ### Architecture
 This application instantiate a Vagrant virtual machine using Ansible as
-provisioner to build a Rails development/production isolated environment.  
-It is required to have both Vagrant and Ansible installed.
+provisioner to build a Rails test/development/production isolated environment and clones the git repo that contain the solution for this test.  
+It is required to have both Vagrant and Ansible installed.  
 Install instructions can be found here:
 * Vagrant install instructions:
     * [Vagrant instructions](https://www.vagrantup.com/docs/installation/)
@@ -14,30 +14,36 @@ Install instructions can be found here:
 
 *(For Mac Os X it is recommended to use homebrew to  install Ansible)*
 
-Once this packages are installed the next steps are simple:  
+Once this packages are installed the next steps are:  
 
 **1. Instructions**
 
 * Clone the repo ([Source Code](git@github.com:havk64/ADTsys-ansible-deploy.git))  
 
-* On command line:  
+* On command line:
+
         $ cd ADTsys-ansible-deploy
 * And run:
+
         $ vagrant up
 
 > *(It will take sometime to download and install all components for the first time. Grab a cup of coffee ;-) )*  
 
-Once it is finished, open your browser and point it to [**localhost:5000/**](localhost:5000/) to see the app running.
-You can always `vagrant ssh` in order to login to the vagrant machine.  
-This environment and Ansible tasks were built to be idempotent, that is, you can provision the virtual machine how many times you want without compromising the system or have duplicated files or configuration.  
-If for some reason the process stops just run `vagrant up` again or `vagrant provision`(if the machine is already up) to re-run all tasks again.
+Once the installation is finished, open your browser and point it to [**localhost:5000/**](localhost:5000/) to see the app running.  
+You can always run `vagrant ssh` in order to login to the vagrant machine.  
+The ansible tasks were built to be **idempotent**, that is, you can provision the virtual machine with related ansible tasks how many times you want without compromising the system or have duplicated files or configuration, following practices for CI/CD(Continuous Integration, Continuous Delivery).  
+If for some reason the installation process stops just run again `vagrant up`(to initialize the machine) or `vagrant provision`(if the machine is already up and running) to re-run all tasks again.  
+At the end you can run `vagrant destroy` to delete the virtual machine and its components.
 
 ### About the application
-This Web Application is written in Ruby using Ruby on Rails using PostgreSQL for persistence.  
-The front end was not priority in order to focus on the ruby code and on minimize the database requests.  
-For that matter I used some control flow checks that ensure that requests to update the database using the Webmotors API are made just when new items are added, so on each request for the page(client request) just one request is sent to the database.
-Also, if the Webmotors API is not available for some reason the application don't stop working and can keep serving pages using its persisted data.
-All code needed to make the requests for the API were moved to a ***[Service Object]()*** in order to keep the controllers and models clean and DRY.    
+At this irst time the front end was not priority but the ruby code and the overall performance and optimization thinking on a production environment.  
+All code needed to update and persist the API data were moved to a ***[Service Object]()*** in order to keep controllers and models clean and DRY following Rails best practices.  
+To minimize database requests(queries) and still keep in sync with Webmotors API just one request is made on each client request(page load) to check if new items were added.  
+Also, if the Webmotors API is not available for some reason the application don't stop working and can keep serving pages using its previously persisted data.  
+RSpec feature and unit tests are available via rspec/rake commands:
 
-by Alexandro de Oliveira
+        $ rake
+        
+
+
 ---------------
