@@ -1,0 +1,55 @@
+---
+- name: Setup git credentials
+  git_config: name={{ item.name }} value={{ item.value }} scope=global
+  with_items:
+    - { name: 'user.email', value: 'alexandro.oliveira@holbertonschool.com' }
+    - { name: 'user.name', value: 'Alexandro de Oliveira' }
+    - { name: 'core.editor', value: 'vim' }
+- git_config: list_all=yes scope=global
+
+- name: Creates .ssh directory for root
+  file: path={{ home_dir }}/.ssh state=directory
+
+- name: Upload the private key used for Github cloning
+  copy: src=keys/github dest={{ home_dir }}/.ssh/github
+
+- name: Correct SSH deploy key permissions
+  file: dest={{ home_dir }}/.ssh/github mode=0600
+
+- name: Change owner and group dest directory
+  become: true
+  file: dest={{ deploy_path }} owner={{ deploy_user }} group={{ deploy_user }}
+
+- name: Deploy from git
+  git: >
+    repo=git@github.com:havk64/ADTsys-Applicant-Test.git
+    dest={{ deploy_path }} key_file={{ home_dir }}/.ssh/github
+    accept_hostkey=true force=yes
+
+- name: Set gem config files
+  copy: src=gemrc dest={{ home_dir }}/.gemrc
+
+- name: Bundle install
+  bundler: gemfile={{ deploy_path }}/Gemfile
+
+- name: Rake db:create
+  command: "{{ deploy_path }}/bin/rake {{ item }}"
+  with_items:
+    - db:create
+    - db:migrate
+  args:
+    chdir: "{{ deploy_path }}"
+
+- name: Configuring Puma Upstart
+  become: true
+  template: src={{ item.src }} dest=/etc/{{ item.dest }}
+  with_items:
+    - { src: puma.conf.j2, dest: init/puma.conf }
+    - { src: puma-manager.conf, dest: init/puma-manager.conf }
+    - { src: puma.conf, dest: puma.conf }
+
+- name: Start Puma Server
+  become: true
+  service:
+    name: puma-manager
+    state: started

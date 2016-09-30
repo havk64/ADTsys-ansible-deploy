@@ -3,3 +3,4 @@
   hosts: all
 - include: webserver.yml
 - include: database.yml
+- include: deploy.yml

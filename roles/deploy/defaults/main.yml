@@ -1,0 +1,3 @@
+home_dir: "{{ ansible_env.HOME }}"
+deploy_user: "{{ ansible_env.USER }}"
+deploy_path: /srv

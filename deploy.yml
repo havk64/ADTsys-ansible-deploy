@@ -1,0 +1,5 @@
+---
+- name: Deploy the Rails app
+  hosts: webserver
+  roles:
+    - { role: deploy, tags: [ "git", "deploy" ] }
