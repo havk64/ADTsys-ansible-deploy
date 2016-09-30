@@ -3,3 +3,4 @@
   hosts: webserver
   roles:
     - common
+    - { role: rvm, tags: ruby, become: yes }

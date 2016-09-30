@@ -1,0 +1,6 @@
+---
+- name: Test, install and configure Rvm
+  include: 'rvm.yml'
+
+- name: Install ruby version and Bundler
+  include: 'rubies.yml'
