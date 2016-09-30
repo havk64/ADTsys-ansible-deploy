@@ -1,0 +1,4 @@
+---
+db_user: vagrant
+db_name: adtsys_applicant
+db_password: secret

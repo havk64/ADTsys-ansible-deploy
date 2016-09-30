@@ -1,0 +1,20 @@
+
+- name: Ensure the PostgreSQL service is running
+  service: name=postgresql state=started enabled=yes
+
+- name: Create PostgreSQL user
+  become: true
+  become_user: postgres
+  # Using python-psycopg2 module make it possible to replace the
+  # whole commented code below with just this one line:
+  postgresql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    role_attr_flags: "CREATEDB,SUPERUSER"
+
+- name: Create Database
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ db_name }}"
+    owner: "{{ db_user }}"

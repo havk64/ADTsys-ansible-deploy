@@ -2,3 +2,4 @@
 - name: Server configuration
   hosts: all
 - include: webserver.yml
+- include: database.yml

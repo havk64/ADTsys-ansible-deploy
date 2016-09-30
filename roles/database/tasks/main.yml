@@ -1,0 +1,8 @@
+---
+- name: Install PostgreSQL
+  include: postgresql.yml
+  become: true
+  gather_facts: no
+
+- name: Setup database user
+  include: userconfig.yml
