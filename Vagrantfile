@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
   config.ssh.insert_key = false
   config.vm.provider :virtualbox do |vb|
-    vb.name = "ansible"
+    vb.name = "ADTsys-ansible"
     vb.memory = 1024
   end
   config.vm.network "forwarded_port", guest: 3000, host: 5000
