@@ -35,15 +35,5 @@ The ansible tasks were built to be **idempotent**, that is, you can provision th
 If for some reason the installation process stops just run again `vagrant up`(to initialize the machine) or `vagrant provision`(if the machine is already up and running) to re-run all tasks again.  
 At the end you can run `vagrant destroy` to delete the virtual machine and its components.
 
-### About the application
-At this irst time the front end was not priority but the ruby code and the overall performance and optimization thinking on a production environment.  
-All code needed to update and persist the API data were moved to a ***[Service Object]()*** in order to keep controllers and models clean and DRY following Rails best practices.  
-To minimize database requests(queries) and still keep in sync with Webmotors API just one request is made on each client request(page load) to check if new items were added.  
-Also, if the Webmotors API is not available for some reason the application don't stop working and can keep serving pages using its previously persisted data.  
-RSpec feature and unit tests are available via rspec/rake commands:
-
-        $ rake
-        
-
 
 ---------------
