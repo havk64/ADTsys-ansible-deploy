@@ -1,5 +1,5 @@
-# ADTsys ansible deploy
-Automation Project to deploy ADTsys application test using Ansible playbooks on a Vagrant instance
+# Ruby on Rails deployment with Ansible
+Deployment of a Ruby on Rails app using Ansible playbook on a Vagrant instance
 ## Introduction
 
 ### Architecture
@@ -18,11 +18,11 @@ Once this packages are installed the next steps are:
 
 **1. Instructions**
 
-* Clone the repo ([Source Code](git@github.com:havk64/ADTsys-ansible-deploy.git))  
+* Clone the repo ([Source Code](git@github.com:havk64/RoR-Ansible-Vagrant.git))  
 
 * On command line:
 
-        $ cd ADTsys-ansible-deploy
+        $ cd RoR-Ansible-Vagrant
 * And run:
 
         $ vagrant up
