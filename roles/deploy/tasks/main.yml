@@ -22,7 +22,7 @@
 
 - name: Deploy from git
   git: >
-    repo=git@github.com:havk64/ADTsys-Applicant-Test.git
+    repo=git@github.com:havk64/RoR-Ansible-Vagrant.git
     dest={{ deploy_path }} key_file={{ home_dir }}/.ssh/github
     accept_hostkey=true force=yes
 
