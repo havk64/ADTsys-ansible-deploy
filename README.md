@@ -4,7 +4,8 @@ Deployment of a Ruby on Rails app using Ansible playbook on a Vagrant instance
 
 ### Architecture
 This application instantiate a Vagrant virtual machine using Ansible as
-provisioner to build a Rails test/development/production isolated environment and clones the git repo that contain the solution for this test.  
+provisioner to build a Rails test/development/production isolated environment
+and clones the git repo that contain the solution for this test.  
 It is required to have both Vagrant and Ansible installed.  
 Install instructions can be found here:
 * Vagrant install instructions:
@@ -27,13 +28,21 @@ Once this packages are installed the next steps are:
 
         $ vagrant up
 
-> *(It will take sometime to download and install all components for the first time. Grab a cup of coffee ;-) )*  
+> *(It will take sometime to download and install all components for the first
+time. Grab a cup of coffee ;-) )*  
 
-Once the installation is finished, open your browser and point it to [**localhost:5000/**](localhost:5000/) to see the app running.  
+Once the installation is finished, open your browser and point it to
+[**localhost:5000/**](localhost:5000/) to see the app running.  
 You can always run `vagrant ssh` in order to login to the vagrant machine.  
-The ansible tasks were built to be **idempotent**, that is, you can provision the virtual machine with related ansible tasks how many times you want without compromising the system or have duplicated files or configuration, following practices for CI/CD(Continuous Integration, Continuous Delivery).  
-If for some reason the installation process stops just run again `vagrant up`(to initialize the machine) or `vagrant provision`(if the machine is already up and running) to re-run all tasks again.  
-At the end you can run `vagrant destroy` to delete the virtual machine and its components.
+The ansible tasks were built to be **idempotent**, that is, you can provision
+the virtual machine with related ansible tasks how many times you want without
+compromising the system by having duplicated files or configuration, following
+best DevOps practices.  
+If for some reason the installation process stops just run again `vagrant up`
+(to initialize the machine) or `vagrant provision`(if the machine is already
+up and running) to re-run all tasks again.  
+At the end you can run `vagrant destroy` to delete the virtual machine and its
+components.
 
 
 ---------------
